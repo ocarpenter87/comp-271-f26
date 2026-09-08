@@ -89,7 +89,6 @@ class Array271:
 
     def add(self, value: str):
         """Add a string to the array, growing it first if necessary.
-
         Parameters:
             value (str): the string to store next.
 
@@ -124,6 +123,18 @@ class Array271:
         self.occupancy += 1
 
     def resize(self):
+        new_capacity = int(self.capacity + (self.capacity * self.resize_factor)) # 1. the equation mentioned in the instructions.
+                                                                                # make sure the result is an int
+        if new_capacity <= self.capacity:                               # for instances such as 0.25 rounding to 0 seats. just add 1 if so.
+            new_capacity += 1
+
+        new_items = [None] * new_capacity                           # 2. a new list of the new capacity with every every slot set as None
+        
+        for i in range(self.occupancy):                            # 3. this copies every item from the old list to the new one by iterating it
+            new_items[i] = self.items[i]
+
+        self.items = new_items                                     # 4. replacing and updating self.items and self.capacity to the newer settings
+        self.capacity = new_capacity
         """Grow the array's capacity when it's full. YOUR CODE GOES HERE.
 
         This method is intentionally left unimplemented (just `pass`).
