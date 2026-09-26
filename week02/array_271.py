@@ -88,8 +88,9 @@ class Array271:
         self.items: list = [None] * capacity
 
     def add(self, value: str):
+        new_capacity = self.capacity(capacity * resize_factor)
+        self.capacity = new_capacity
         """Add a string to the array, growing it first if necessary.
-
         Parameters:
             value (str): the string to store next.
 
