@@ -42,26 +42,37 @@ class TrainLine271(OurContract):
         return self.__name
 
     def add(self, value: str) -> None:
-        # TODO: wrap value in a new Station and attach it after the last
-        # station, the BetterTrainLine way -- a fixed number of steps no
-        # matter how long the line is. An empty line is the special case.
-        pass
+        new_station = Station(value)
+        if self.__head == None:
+            self.__head = new_station
+        else:
+            self.__last.set_next(new_station)
+        self.__last = new_station
 
     def contains(self, value: str) -> bool:
-        # TODO: delegate to index_of, as we did in class.
-        pass
+        return len(self.index_of(value)) > 0
 
     def index_of(self, value: str) -> list:
-        # TODO: return a one-element list with the position of the FIRST
-        # station named value, e.g. [2], or an empty list [] if there is
-        # no such station. Stop walking as soon as you find it.
-        pass
+        current_station = self.__head
+        result = []
+        i = 0
+        while current_station is not None and len(result)==0:
+            if current_station.get_name() == value:
+                result = [i]
+            current_station = current_station.get_next()
+            i += 1
+        return result
 
     def indices(self, value: str) -> list:
-        # TODO: return a list with the position of EVERY station named
-        # value, front to back, e.g. [1, 4], or [] if there is none.
-        pass
+        current_station = self.__head
+        result = []
+        i = 0
+        while current_station is not None:
+            if current_station.get_name() == value:
+                result += [i]
+            current_station = current_station.get_next()
+            i += 1
+        return result
 
     def count(self, value: str) -> int:
-        # TODO: how many stations are named value.
-        pass
+        return len(self.idices(value))
