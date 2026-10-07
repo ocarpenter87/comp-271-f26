@@ -75,4 +75,4 @@ class TrainLine271(OurContract):
         return result
 
     def count(self, value: str) -> int:
-        return len(self.idices(value))
+        return len(self.indices(value))
