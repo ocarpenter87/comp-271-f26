@@ -72,6 +72,18 @@ A short write-up (code + text, however you want to present it) covering:
    or a slow function can quietly run for a very long time without any
    single call ever looking alarming.
 
+   **Two practical notes.** First, a timing check that runs *after* a call
+   returns can never stop a call that doesn't return, so to enforce the
+   per-call limit you have to interrupt the call itself: press Ctrl-C and
+   write down the size you were on, or use `signal.alarm` as
+   `simple_testing.py` does (macOS and Linux). Second, **`sauron` is the one
+   exception to "start at $n = 16$."** A single call at $n = 16$ can take
+   years, so there would be nothing to measure. Start `sauron` at $n = 2$,
+   add 1 each step, and watch the time multiply as $n$ grows; expect it to
+   stop somewhere around $n = 10$. The starter `simple_testing.py` and
+   `testing_scaffold.ipynb` already do this. See `testing_guide.md` for the
+   full method.
+
    You will likely **not** reach the same $n$ for every function — the
    function that's growing faster will cross your time budget at a
    smaller $n$ than one that's growing slower. That difference is itself
