@@ -76,6 +76,7 @@ public class BinarySearchTree {
             // node is thrown away). Decide what this branch should do so the
             // tree remembers the repeat.
             // size counts distinct values, so size must not change.
+            currentNode.setFrequency(currentNode.getFrequency() + 1);  // here, we set the frequency to one more than the current frequency
         }
         // Return this subtree's root: the new node in the base case, otherwise
         // the node we were given. One return, at the end.
@@ -94,8 +95,7 @@ public class BinarySearchTree {
      */
     public boolean search(String value) {
         boolean found = false; // pessimistic: assume the value is not there
-        // TODO: replace the next line with your code.
-        found = false;
+        found = searchRec(root, new Node(value));
         return found;
     } // method search
 
@@ -115,11 +115,21 @@ public class BinarySearchTree {
      */
     private boolean searchRec(Node currentNode, Node target) {
         boolean found = false; // pessimistic default
-        // TODO: replace the next line with your code.
-        found = false;
+        if (currentNode == null) {
+            found = false;
+        }
+        else if (target.getValue().equals(currentNode.getValue())) {
+            found = true;
+        }
+        else if (currentNode.getValue().compareTo(target.getValue()) > 0) {
+            found = searchRec(currentNode.getLeft(), target);
+        }
+        else {
+            found = searchRec(currentNode.getRight(), target);
+        }        
         return found;
-    } // method searchRec
-
+    }
+        
     /**
      * PART B: reports how many times a value has been inserted.
      *
@@ -130,8 +140,21 @@ public class BinarySearchTree {
      */
     public int frequency(String value) {
         int occurrences = 0; // pessimistic: assume the value is not there
-        // TODO: replace the next line with your code.
-        occurrences = 0;
+        Node currentNode = root;
+        while (currentNode != null) {
+            int placeholder = currentNode.getValue().compareTo(value);
+            if (placeholder == 0){
+                occurrences = currentNode.getFrequency();
+                currentNode = null;
+            }
+            else if (placeholder < 0){
+                currentNode = currentNode.getRight();
+            }
+            else {
+                currentNode = currentNode.getLeft();
+            }
+        }
         return occurrences;
+    
     } // method frequency
 }
